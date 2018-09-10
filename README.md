@@ -10,5 +10,5 @@ Are you getting the picture?
 # Install
 
 ```{r}
-devtools::install('anniejw6/testingtools')
+devtools::install_github('anniejw6/testingtools')
 ```
