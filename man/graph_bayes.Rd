@@ -4,8 +4,16 @@
 \alias{graph_bayes}
 \title{Graph Bayesian Updating}
 \usage{
-graph_bayes(est_1, se_1, est_2, se_2, est_pooled = NULL,
-  se_pooled = NULL, x_min = -0.075, x_max = 0.075)
+graph_bayes(
+  est_1,
+  se_1,
+  est_2,
+  se_2,
+  est_pooled = NULL,
+  se_pooled = NULL,
+  x_min = -0.075,
+  x_max = 0.075
+)
 }
 \arguments{
 \item{est_1}{Point estimate of Distribution 1}
