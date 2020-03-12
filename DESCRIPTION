@@ -8,5 +8,10 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 Imports: checkmate
-Suggests: ggplot2
-RoxygenNote: 6.1.0
+Suggests: 
+    ggplot2,
+    randomizr,
+    quickblock,
+    distances,
+    testthat
+RoxygenNote: 7.1.0

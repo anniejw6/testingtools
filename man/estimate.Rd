@@ -4,8 +4,14 @@
 \alias{estimate}
 \title{Estimate Outcome}
 \usage{
-estimate(outcome, covar, treat, family = "gaussian", type = "full",
-  verbose = TRUE)
+estimate(
+  outcome,
+  covar,
+  treat,
+  family = "gaussian",
+  type = "full",
+  verbose = TRUE
+)
 }
 \arguments{
 \item{outcome}{Outcome data, as a numeric vector}
