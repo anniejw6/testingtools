@@ -13,7 +13,7 @@
 #'
 #' @return ggplot2 object
 #' @export
-#'
+#' @importFrom stats dnorm
 #' @examples
 #' graph_bayes(0, 0.01, 0.05, 0.01)
 graph_bayes <- function(est_1, se_1,
@@ -50,6 +50,9 @@ graph_bayes <- function(est_1, se_1,
 #' Bayesian Updating of Experimental Results
 #'
 #' Generates posterior based on prior (Distribution 1) and likelihood (Distribution 2).
+#' This function implements the Bayesian averaging employed by
+#' Green, Krasno, and Coppock et al. in The Effects of Lawn Signs on Vote Outcomes: Results from Four Randomized Field Experiments.
+#' Their replication code is available here: https://doi.org/10.7910/DVN/K2TLDB.
 #'
 #' @param est_1 Point estimate of Distribution 1
 #' @param se_1 Standard error on point estimate of Distribution 2
@@ -60,6 +63,7 @@ graph_bayes <- function(est_1, se_1,
 #'
 #' @return vector of the posterior point estimate and SE. Optionally, graph
 #' @export
+#' @importFrom stats weighted.mean
 #'
 #' @examples
 #' bayes_updater(0, 0.1, 2.5, 0.1, x_min = -5, x_max = 5)

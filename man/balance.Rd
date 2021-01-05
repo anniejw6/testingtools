@@ -12,6 +12,8 @@ balance(outcome, covar, family = "gaussian", verbose = TRUE)
 \item{covar}{Dataframe of covariates. Each column should be a separate covariate.}
 
 \item{family}{Family for GLM}
+
+\item{verbose}{TRUE by default}
 }
 \value{
 Summary of GLM model object and anova

@@ -1,15 +1,17 @@
 #' Randomization Functions
 #'
 #' @param covariates data.frame or matrix of covariates
-#' @param treatments
+#' @param treatments treatment labels, character vector
+#' @param probs probabilities of treatment, numeric vector
+#' @param blk_size minimum block size, defaults to equal length of treatments
 #'
 #' @return
 #' @export
-#'
+#' @importFrom stats model.matrix
 #' @examples
 #' cov_df <- data.frame(
-#'   a = sample(1:5, 1000, replace = T),
-#'   b = sample(letters[1:10], 1000, replace = T))
+#'   a = sample(1:5, 1000, replace = TRUE),
+#'   b = sample(letters[1:10], 1000, replace = TRUE))
 #' rand(cov_df,
 #'      treatments = c('Control', 'Treat'),
 #'      probs = c(0.25, 0.75),

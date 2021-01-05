@@ -5,10 +5,12 @@
 #' @param outcome Outcome data, as a numeric vector. (Can be treatment assignment)
 #' @param covar Dataframe of covariates. Each column should be a separate covariate.
 #' @param family Family for GLM
+#' @param verbose TRUE by default
 #'
 #' @return Summary of GLM model object and anova
 #' @export
 #'
+#' @importFrom stats anova
 #' @examples
 #' data(iris)
 #' mm <- balance(outcome = sample(0:1, nrow(iris), replace = TRUE),

@@ -1,17 +1,19 @@
 Package: testingtools
 Title: Helper functions to run and analyze experiments
-Version: 0.0.0.9000
+Version: 0.0.1
 Authors@R: person("Annie", "Wang", email = "anniejw6@gmail.com", role = c("aut", "cre"))
 Description: Wrapper functions to make it slightly easier to randomize and analyze experiments. Contains very little original content.
 Depends: R (>= 3.5.0)
 License: MIT
 Encoding: UTF-8
 LazyData: true
-Imports: checkmate
+Imports: checkmate, modmarg
 Suggests: 
     ggplot2,
     randomizr,
     quickblock,
     distances,
-    testthat
-RoxygenNote: 7.1.0
+    testthat,
+    dplyr,
+    data.table
+RoxygenNote: 7.1.1

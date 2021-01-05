@@ -9,7 +9,11 @@ rand(covariates, treatments, probs = NULL, blk_size = NULL)
 \arguments{
 \item{covariates}{data.frame or matrix of covariates}
 
-\item{treatments}{}
+\item{treatments}{treatment labels, character vector}
+
+\item{probs}{probabilities of treatment, numeric vector}
+
+\item{blk_size}{minimum block size, defaults to equal length of treatments}
 }
 \value{
 
@@ -19,8 +23,8 @@ Randomization Functions
 }
 \examples{
 cov_df <- data.frame(
-  a = sample(1:5, 1000, replace = T),
-  b = sample(letters[1:10], 1000, replace = T))
+  a = sample(1:5, 1000, replace = TRUE),
+  b = sample(letters[1:10], 1000, replace = TRUE))
 rand(cov_df,
      treatments = c('Control', 'Treat'),
      probs = c(0.25, 0.75),

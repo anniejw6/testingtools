@@ -1,52 +1,64 @@
 #' Estimate Outcome
 #'
-#' @param outcome Outcome data, as a numeric vector
-#' @param covar Dataframe of covariates. Each column should be a separate covariate.
-#' @param treat Treatment assignment
-#' @param family Family for GLM
-#' @param type `full` or `sparse`. `full` is a model with all covariates. `sparse` is a model with no covariates.
+#' @param outcome character, outcome column.
+#' @param covar character, columns for covariates
+#' @param treat character, treatment assignment
+#' @param family Family for glm
+#' @param type `top` or `sub` based on topline or subgroup.
+#' @param sub_var character, subgroup variable
+#' @param data data frame to use for analysis
+#' @param ... other paramters passed to glm
 #' @param verbose Boolean. Should model output be printed?
+#'
 #' @return GLM model object
 #' @export
+#' @importFrom stats glm gaussian as.formula
+#' @importFrom utils capture.output
+
 #'
 #' @examples
 #' data(iris)
-#' mm <- estimate(outcome = iris$Sepal.Length,
-#'                covar = iris[, -1],
-#'                treat = sample(0:1, nrow(iris), replace = TRUE))
+#' iris$treat <- sample(0:1, nrow(iris), replace = TRUE)
+#' mm <- estimate(
+#'   outcome = 'Sepal.Length',
+#'   covar = 'Sepal.Width',
+#'   treat = 'treat', data = iris)
 estimate <- function(
   outcome,
   covar,
   treat,
-  family = 'gaussian',
-  type = 'full',
-  verbose = TRUE
+  data,
+  sub_var = NULL,
+  family = gaussian,
+  type = 'top',
+  verbose = TRUE,
+  ...
 ){
 
-  checkmate::assert_data_frame(covar, any.missing = FALSE)
-  checkmate::assert_numeric(outcome, len = nrow(covar))
-  checkmate::assert_choice(type, choices = c('full', 'sparse'))
-  checkmate::assert_vector(treat, len = nrow(covar))
-  checkmate::assert_character(family, len = 1, any.missing = FALSE)
+  checkmate::assert_character(outcome, len = 1)
+  checkmate::assert_character(covar, any.missing = FALSE)
+  checkmate::assert_character(treat, len = 1)
+  checkmate::assert_character(sub_var, len = 1, null.ok = TRUE)
+  checkmate::assert_data_frame(data)
+  checkmate::assert_choice(type, choices = c('top', 'sub'))
   checkmate::assert_logical(verbose, len = 1)
 
   if(any(! outcome %in% 0:1))
     warning('Outcome data is not binary!')
 
-  df <- data.frame(outcome = outcome, treat = treat, covar,
-                   stringsAsFactors = FALSE)
+  covar <- paste0(covar, collapse = "+")
 
-  if(type == 'full'){
-    mod <- glm(formula = outcome ~ ., family = family, data = df,
-               model = F, x = F, y = F)
+  if(type == "top"){
+    form <- sprintf("%s ~ %s + %s", outcome, treat, covar)
+  } else if(type == "sub"){
+    form <- sprintf("%s ~ %s * %s + %s", outcome, treat, sub_var, covar)
   }
 
-  if(type == 'sparse'){
+  form <- as.formula(form)
 
-    mod <- glm(formula = outcome ~ treat, family = family, data = df,
-               model = F, x = F, y = F)
-
-  }
+  print("Distribution of Outcome Data")
+  print(table(data[[outcome]], useNA = 'ifany'))
+  mod <- glm(form, data = data, x = FALSE, y = FALSE, family = family, ...)
 
   if(verbose)
     cat(capture.output(summary(mod)), sep = '\n')

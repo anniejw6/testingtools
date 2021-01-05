@@ -8,23 +8,32 @@ estimate(
   outcome,
   covar,
   treat,
-  family = "gaussian",
-  type = "full",
-  verbose = TRUE
+  data,
+  sub_var = NULL,
+  family = gaussian,
+  type = "top",
+  verbose = TRUE,
+  ...
 )
 }
 \arguments{
-\item{outcome}{Outcome data, as a numeric vector}
+\item{outcome}{character, outcome column.}
 
-\item{covar}{Dataframe of covariates. Each column should be a separate covariate.}
+\item{covar}{character, columns for covariates}
 
-\item{treat}{Treatment assignment}
+\item{treat}{character, treatment assignment}
 
-\item{family}{Family for GLM}
+\item{data}{data frame to use for analysis}
 
-\item{type}{`full` or `sparse`. `full` is a model with all covariates. `sparse` is a model with no covariates.}
+\item{sub_var}{character, subgroup variable}
+
+\item{family}{Family for glm}
+
+\item{type}{`top` or `sub` based on topline or subgroup.}
 
 \item{verbose}{Boolean. Should model output be printed?}
+
+\item{...}{other paramters passed to glm}
 }
 \value{
 GLM model object
@@ -34,7 +43,9 @@ Estimate Outcome
 }
 \examples{
 data(iris)
-mm <- estimate(outcome = iris$Sepal.Length,
-               covar = iris[, -1],
-               treat = sample(0:1, nrow(iris), replace = TRUE))
+iris$treat <- sample(0:1, nrow(iris), replace = TRUE)
+mm <- estimate(
+  outcome = 'Sepal.Length',
+  covar = 'Sepal.Width',
+  treat = 'treat', data = iris)
 }
