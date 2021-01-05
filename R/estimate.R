@@ -43,7 +43,7 @@ estimate <- function(
   checkmate::assert_choice(type, choices = c('top', 'sub'))
   checkmate::assert_logical(verbose, len = 1)
 
-  if(any(! outcome %in% 0:1))
+  if(any(! data[[outcome]] %in% 0:1))
     warning('Outcome data is not binary!')
 
   covar <- paste0(covar, collapse = "+")
