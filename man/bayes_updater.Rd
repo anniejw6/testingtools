@@ -24,6 +24,9 @@ vector of the posterior point estimate and SE. Optionally, graph
 }
 \description{
 Generates posterior based on prior (Distribution 1) and likelihood (Distribution 2).
+This function implements the Bayesian averaging employed by
+Green, Krasno, and Coppock et al. in The Effects of Lawn Signs on Vote Outcomes: Results from Four Randomized Field Experiments.
+Their replication code is available here: https://doi.org/10.7910/DVN/K2TLDB.
 }
 \examples{
 bayes_updater(0, 0.1, 2.5, 0.1, x_min = -5, x_max = 5)

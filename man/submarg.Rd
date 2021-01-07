@@ -4,7 +4,14 @@
 \alias{submarg}
 \title{Return subgroup margins}
 \usage{
-submarg(mod, subgrp_var, treat_var = "treatment", mod_df = mod$data, ...)
+submarg(
+  mod,
+  subgrp_var,
+  treat_var = "treatment",
+  mod_df = mod$data,
+  weight = mod$prior.weights,
+  ...
+)
 }
 \arguments{
 \item{mod}{glm}
@@ -15,6 +22,8 @@ a categorical variable}
 \item{treat_var}{Treatment variable, character}
 
 \item{mod_df}{Dataframe used to estimate model, defaults to mod$data}
+
+\item{weight}{Weight parameter to pass to `modmarg::marg`, defaults to mod$prior.weights}
 
 \item{...}{Other parameters passed to modmarg::marg}
 }

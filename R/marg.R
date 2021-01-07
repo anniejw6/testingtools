@@ -73,7 +73,9 @@ topmarg <- function(mod, treat_var = 'treatment',
 #' a categorical variable
 #' @param treat_var Treatment variable, character
 #' @param mod_df Dataframe used to estimate model, defaults to mod$data
+#' @param weight Weight parameter to pass to `modmarg::marg`, defaults to mod$prior.weights
 #' @param ... Other parameters passed to modmarg::marg
+
 #'
 #' @return
 #' @export
@@ -84,7 +86,10 @@ topmarg <- function(mod, treat_var = 'treatment',
 #' mod <- glm(outcome ~ treatment * yc + distance, data = margex, family = 'binomial')
 #' submarg(mod, 'yc', 'treatment')
 submarg <- function(mod, subgrp_var,
-                    treat_var = 'treatment', mod_df = mod$data, ...){
+                    treat_var = 'treatment',
+                    mod_df = mod$data,
+                    weight = mod$prior.weights,
+                    ...){
 
   if(! checkmate::test_class(mod, c("glm"))){
     warning("This function has not been tested with non-glm models, although
@@ -94,6 +99,7 @@ submarg <- function(mod, subgrp_var,
   checkmate::assert_data_frame(mod_df)
   checkmate::assert_choice(treat_var, names(mod_df))
   checkmate::assert_choice(subgrp_var, names(mod_df))
+  checkmate::assert_numeric(weight, len = nrow(mod_df))
 
   unique_values <- mod_df[[subgrp_var]][! duplicated( mod_df[[subgrp_var]] )]
   unique_values <- unique_values[order(unique_values)]
@@ -105,8 +111,11 @@ submarg <- function(mod, subgrp_var,
   marg_results <- lapply(unique_values, function(x){
     # Subset to relevant category
     tmp_df <- dplyr::filter(mod_df, get(subgrp_var) == x)
+    tmp_wgt <- weight[mod_df[[subgrp_var]] == x]
+
     # Estimate toplines within that subset of the data
-    topmarg <- topmarg(mod, treat_var = treat_var, data = tmp_df, ...)
+    topmarg <- topmarg(mod, treat_var = treat_var, data = tmp_df,
+                       weight = tmp_wgt, ...)
     topmarg[[subgrp_var]] <- x
     topmarg
   })
