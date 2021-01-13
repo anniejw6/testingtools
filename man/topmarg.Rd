@@ -4,12 +4,14 @@
 \alias{topmarg}
 \title{Return Topline Margins}
 \usage{
-topmarg(mod, treat_var = "treatment", ...)
+topmarg(mod, treat_var = "treatment", mod_df = mod$data, ...)
 }
 \arguments{
 \item{mod}{glm model}
 
 \item{treat_var}{Treatment variable, character}
+
+\item{mod_df}{dataframe used in model, defaults to mod$data}
 
 \item{...}{Other parameters passed to modmarg::marg}
 }

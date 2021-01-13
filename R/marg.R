@@ -31,7 +31,9 @@
 #'
 #' @param mod glm model
 #' @param treat_var Treatment variable, character
+#' @param mod_df dataframe used in model, defaults to mod$data
 #' @param ... Other parameters passed to modmarg::marg
+
 #'
 #' @return
 #' @export
@@ -42,6 +44,7 @@
 #' mod <- glm(outcome ~ treatment, data = margex, family = 'binomial')
 #' topmarg(mod, 'treatment')
 topmarg <- function(mod, treat_var = 'treatment',
+                    mod_df = mod$data,
                     ...){
 
   if(! checkmate::test_class(mod, c("glm"))){
@@ -52,10 +55,12 @@ topmarg <- function(mod, treat_var = 'treatment',
 
   # Calculate Marginal Levels
   marg_eff <- modmarg::marg(mod, var_interest = treat_var,
+                            data = mod_df,
                             type = "effects", ...)
   marg_eff <- .tidy_modmarg(marg_eff, 'eff')
 
   marg_lvl <- modmarg::marg(mod, var_interest = treat_var,
+                            data = mod_df,
                             type = "levels",...)
   marg_lvl <- .tidy_modmarg(marg_lvl, 'lvl')
 
