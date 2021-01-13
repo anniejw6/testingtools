@@ -51,7 +51,6 @@ topmarg <- function(mod, treat_var = 'treatment',
     warning("This function has not been tested with non-glm models, although
             it should support everything supported by `modmarg::marg`")
   }
-  checkmate::assert_choice(treat_var, all.vars(mod$formula))
 
   # Calculate Marginal Levels
   marg_eff <- modmarg::marg(mod, var_interest = treat_var,
