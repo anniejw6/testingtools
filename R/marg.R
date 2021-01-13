@@ -119,7 +119,7 @@ submarg <- function(mod, subgrp_var,
     tmp_wgt <- weight[mod_df[[subgrp_var]] == x]
 
     # Estimate toplines within that subset of the data
-    topmarg <- topmarg(mod, treat_var = treat_var, data = tmp_df,
+    topmarg <- topmarg(mod, treat_var = treat_var, mod_df  = tmp_df,
                        weight = tmp_wgt, ...)
     topmarg[[subgrp_var]] <- x
     topmarg
