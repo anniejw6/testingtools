@@ -1,6 +1,6 @@
 Package: testingtools
 Title: Helper functions to run and analyze experiments
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person("Annie", "Wang", email = "anniejw6@gmail.com", role = c("aut", "cre"))
 Description: Wrapper functions to make it slightly easier to randomize and analyze experiments. Contains very little original content.
 Depends: R (>= 3.5.0)
